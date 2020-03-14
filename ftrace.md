@@ -81,13 +81,13 @@ echo sched_switch sched_waking > set_event
 ```
 
 Filter events: events/sched/sched_switch/filter
-
-First, to check format of trace_event
 ```
+First, to check format of trace_event
 #> cat events/sched/sched_switch/format
 ```
-Second, follow the format showing as output from the above command
+
 ```
+Second, follow the format showing as output from the above command and set filter value into parameters.
 #> echo 'prev_comm == "bash" %% prev_state % 0x02' > events/sched/sched_switch/filter
 #> echo 1 > events/sched/sched_switch/enable
 #> echo > trace
