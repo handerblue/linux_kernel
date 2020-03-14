@@ -5,7 +5,10 @@ Root of tracefs usually located at:
 
 dump trace:
 ```
-#> cat trace
+#> cat trace (Read trace buffer)
+#> echo > trace (Clean trace buffer)
+or
+#> cat trace_pipe (Reand and Clean trace buffer)
 ```
 Or mount tracefs manually
 - #> mount -t tracefs nodev /sys/kernel/tracing
@@ -55,3 +58,40 @@ Trace Graph: Friendly to show function caller & callee. But I don't use it so mu
 #> echo function_graph > current_tracer
 #> cat trace
 ```
+
+# Trace Events
+function tracer is still not enough. What about variable, parameters and other information we need to extract from kernel? Based on ftrace framework, we can customize what information to be recorded. There are already bunch of trace_events in linux kernel. For most useful trace_event to me is sched/irq events. Over 90% system performance issues can be narrowed down significantly by looking into sched/irq events.
+
+Checking existed trace_events:
+```
+#> cat events
+```
+
+Enable Method1: events/$module/$sub_event/enable
+```
+#> echo nop > current_tracer
+#> echo 1 > events/sched/sched_switch/enable
+#> echo 1 > events/sched/sched_waking/enable
+#> cat trace
+```
+
+Enable Method2: set_event
+```
+echo sched_switch sched_waking > set_event
+```
+
+Filter events: events/sched/sched_switch/filter
+
+First, to check format of trace_event
+```
+#> cat events/sched/sched_switch/format
+```
+Second, follow the format showing as output from the above command
+```
+#> echo 'prev_comm == "bash" %% prev_state % 0x02' > events/sched/sched_switch/filter
+#> echo 1 > events/sched/sched_switch/enable
+#> echo > trace
+#> cat trace
+```
+
+
