@@ -15,7 +15,8 @@ We can get rid of first line. But this will lead to lack of type checking of ptr
 const typeof( ((type *)0)->member ) *__mptr = (ptr);
 ```
 
-offseof(type, member): returns the offset value from start address of structure.
+offsetof(type, member): returns the offset value from start address of structure.
+
 ```
 (type *)( (char *)__mptr - offsetof(type,member) );})
 ```
@@ -26,6 +27,9 @@ struct typeA{
   int member1;
 };
 
-offseof(typeA, member1) returns 12 
+offsetof(typeA, member1) returns 12 
   a = 0 + 4, b = 4 + 8, member1 = 8 + 12 (32bits arch)
+
+gcc provides build in offsetof function:  __builtin_offsetof(a, b) which offsetoff() actually calls.
+
 ```
