@@ -94,4 +94,24 @@ Second, follow the format showing as output from the above command and set filte
 #> cat trace
 ```
 
+# General events setup 
 
+```
+# Clear tracers
+echo nop > /sys/kernel/debug/tracing/current_tracer
+# Clear events
+echo > /sys/kernel/debug/tracing/set_event
+echo sched_switch sched_wakeup sched_wakeup_new irq_handler_entry irq_handler_exit > /sys/kernel/debug/tracing/set_event
+
+echo 0 > /sys/kernel/debug/tracing/tracing_on
+
+# clean trace buffer
+echo > /sys/kernel/debug/tracing/trace
+
+# Start tracing
+echo 1 > /sys/kernel/debug/tracing/tracing_on
+
+# Stop tracing
+echo 0 > /sys/kernel/debug/tracing/tracing_on
+
+```
