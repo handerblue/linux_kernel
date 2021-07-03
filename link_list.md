@@ -24,11 +24,12 @@ offsetof(type, member): returns the offset value from start address of structure
 struct typeA{
   int a;
   int b;
+  int c;
   int member1;
 };
 
 offsetof(typeA, member1) returns 12 
-  a = 0 + 4, b = 4 + 8, member1 = 8 + 12 (32bits arch)
+  a = 0, b = 0 + 4, c = 4 + 8, member1 = 8 + 12 (32bits arch)
 
 gcc provides build in offsetof function:  __builtin_offsetof(a, b) which offsetoff() actually calls.
 
