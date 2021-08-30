@@ -115,3 +115,6 @@ echo 1 > /sys/kernel/debug/tracing/tracing_on
 echo 0 > /sys/kernel/debug/tracing/tracing_on
 
 ```
+
+REF: https://embeddedbits.org/tracing-the-linux-kernel-with-ftrace/
+
